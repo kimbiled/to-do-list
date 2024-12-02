@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteTodo, editTodo } from "../store/todoSlice";
+import { deleteTodo, editTodo, taskDoneTodo } from "../store/todoSlice";
 import { useDispatch } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -57,7 +57,19 @@ const TodoItem = ({ id, text, completed }) => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                     >
-                        <span>{text}</span>
+                        <input
+                            type="checkbox"
+                            checked={completed}
+                            onChange={() => dispatch(taskDoneTodo({ id }))}
+                            className="w-4 h-4 border-blue-200"
+                        />
+                        <span
+                            className={`${
+                                completed ? "line-through text-gray-400" : ""
+                            }`}
+                        >
+                            {text}
+                        </span>
                         <button
                             className="w-20 h-8 bg-red-300 rounded-2xl"
                             onClick={() => dispatch(deleteTodo({ id }))}
